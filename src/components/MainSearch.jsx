@@ -89,7 +89,10 @@ const MainSearch = () => {
               </div>
             </>
           ) : jobs.length === 0 ? (
-            <p className="mt-2 ms-2"> to begin search a company or a job</p>
+            <p className="mt-2 ms-2 fst-italic">
+              {" "}
+              To start search a company or a job
+            </p>
           ) : (
             jobs.map((jobData) => <Job key={jobData._id} data={jobData} />)
           )}

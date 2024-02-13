@@ -49,24 +49,30 @@ const Favorite = () => {
       <Row>
         <Col>
           <ListGroup>
-            {fav.map((job, i) => (
-              <ListGroupItem key={i}>
-                <Row className="align-items-center">
-                  <Col>{job.title}</Col>
-                  <Col>
-                    <Link to={`/${job.company_name}`}>{job.company_name}</Link>
-                  </Col>
-                  <Col>
-                    <span>{job.job_type}</span>
-                  </Col>
-                  <Col className="text-end">
-                    <Button variant="warning" onClick={() => handleRemove(i)}>
-                      <i className="bi bi-trash text-light "></i>
-                    </Button>
-                  </Col>
-                </Row>
-              </ListGroupItem>
-            ))}
+            {fav.length === 0 ? (
+              <p className="ms-2 fst-italic">You don't have any jobs saved</p>
+            ) : (
+              fav.map((job, i) => (
+                <ListGroupItem key={i}>
+                  <Row className="align-items-center">
+                    <Col>{job.title}</Col>
+                    <Col>
+                      <Link to={`/${job.company_name}`}>
+                        {job.company_name}
+                      </Link>
+                    </Col>
+                    <Col>
+                      <span>{job.job_type}</span>
+                    </Col>
+                    <Col className="text-end">
+                      <Button variant="warning" onClick={() => handleRemove(i)}>
+                        <i className="bi bi-trash text-light "></i>
+                      </Button>
+                    </Col>
+                  </Row>
+                </ListGroupItem>
+              ))
+            )}
           </ListGroup>
         </Col>
       </Row>
