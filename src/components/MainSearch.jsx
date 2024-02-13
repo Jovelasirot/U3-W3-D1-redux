@@ -1,40 +1,34 @@
 import { useState } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  Button,
+  Spinner,
+  Placeholder,
+} from "react-bootstrap";
 import Job from "./Job";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchJobAction } from "../redux/actions";
 
 const MainSearch = () => {
   const [query, setQuery] = useState("");
-  const [jobs, setJobs] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const favCounter = useSelector((state) => {
-    return state.fav.content.length;
-  });
-
-  const baseEndpoint =
-    "https://strive-benchmark.herokuapp.com/api/jobs?search=";
+  const jobs = useSelector((state) => state.jobs.results);
+  const loading = useSelector((state) => state.jobs.loading);
+  const favCounter = useSelector((state) => state.fav.content.length);
 
   const handleChange = (e) => {
     setQuery(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    try {
-      const response = await fetch(baseEndpoint + query + "&limit=20");
-      if (response.ok) {
-        const { data } = await response.json();
-        setJobs(data);
-        console.log(data);
-      } else {
-        alert("Error fetching results");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(fetchJobAction(query));
   };
 
   return (
@@ -55,14 +49,50 @@ const MainSearch = () => {
           <Button variant="success" onClick={() => navigate("/Favorites")}>
             <i className="bi bi-heart-fill"></i>
             <span className="ms-2">
-              {favCounter === 0 ? "no job saved" : `${favCounter} jobs saved`}
+              {favCounter === 0
+                ? "No jobs saved"
+                : favCounter === 1
+                ? `${favCounter} job saved`
+                : `${favCounter} jobs saved`}
             </span>
           </Button>
         </Col>
         <Col xs={10} className="mb-5">
-          {jobs.map((jobData) => (
-            <Job key={jobData._id} data={jobData} />
-          ))}
+          {loading ? (
+            <>
+              <div className="my-4">
+                <Placeholder animation="glow">
+                  <Placeholder xs={12} />
+                  <Placeholder xs={12} />
+                </Placeholder>
+                <Placeholder animation="glow">
+                  <Placeholder xs={12} />
+                </Placeholder>
+              </div>
+              <div className="my-4">
+                <Placeholder animation="glow">
+                  <Placeholder xs={12} />
+                  <Placeholder xs={12} />
+                </Placeholder>
+                <Placeholder animation="glow">
+                  <Placeholder xs={12} />
+                </Placeholder>
+              </div>
+              <div className="my-4">
+                <Placeholder animation="glow">
+                  <Placeholder xs={12} />
+                  <Placeholder xs={12} />
+                </Placeholder>
+                <Placeholder animation="glow">
+                  <Placeholder xs={12} />
+                </Placeholder>
+              </div>
+            </>
+          ) : jobs.length === 0 ? (
+            <p className="mt-2 ms-2"> to begin search a company or a job</p>
+          ) : (
+            jobs.map((jobData) => <Job key={jobData._id} data={jobData} />)
+          )}
         </Col>
       </Row>
     </Container>

@@ -8,6 +8,7 @@ import {
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { removeFromFavAction, resetFavList } from "../redux/actions";
 
 const Favorite = () => {
   const fav = useSelector((state) => state.fav.content);
@@ -16,15 +17,16 @@ const Favorite = () => {
 
   const handleRemove = (i) => {
     alert("Job removed from favorites");
-    dispatch({
-      type: "REMOVE_FROM_FAV",
-      payload: i,
-    });
+    dispatch(removeFromFavAction(i));
   };
 
+  const handleReset = () => {
+    alert("This will reset your favorites job list");
+    dispatch(resetFavList());
+  };
   return (
-    <Container>
-      <Row className="justify-content-center align-items-center vh-100">
+    <Container className="vh-100 d-flex flex-column justify-content-center ">
+      <Row>
         <Col>
           <Button
             variant="success"
@@ -33,6 +35,19 @@ const Favorite = () => {
           >
             Go back
           </Button>
+        </Col>
+        <Col className="text-end">
+          <Button
+            variant="danger"
+            className="mb-2"
+            onClick={() => handleReset()}
+          >
+            RESET <i className="bi bi-x-circle"></i>
+          </Button>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
           <ListGroup>
             {fav.map((job, i) => (
               <ListGroupItem key={i}>
@@ -45,8 +60,8 @@ const Favorite = () => {
                     <span>{job.job_type}</span>
                   </Col>
                   <Col className="text-end">
-                    <Button variant="danger" onClick={() => handleRemove(i)}>
-                      <i className="bi bi-trash"></i>
+                    <Button variant="warning" onClick={() => handleRemove(i)}>
+                      <i className="bi bi-trash text-light "></i>
                     </Button>
                   </Col>
                 </Row>

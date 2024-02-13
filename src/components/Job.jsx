@@ -3,6 +3,7 @@ import { Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useDispatch, useSelector } from "react-redux";
+import { addToFavAction } from "../redux/actions";
 
 const Job = ({ data }) => {
   const dispatch = useDispatch();
@@ -10,10 +11,7 @@ const Job = ({ data }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const handleAddToFavorites = () => {
-    dispatch({
-      type: "ADD_TO_FAV",
-      payload: data,
-    });
+    dispatch(addToFavAction(data));
     setIsFavorite(true);
   };
 
