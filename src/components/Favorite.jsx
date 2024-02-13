@@ -26,6 +26,7 @@ const Favorite = () => {
   };
   return (
     <Container className="vh-100 d-flex flex-column justify-content-center ">
+      <h1 className="display-4">Your favorite jobs</h1>
       <Row>
         <Col>
           <Button
@@ -50,7 +51,9 @@ const Favorite = () => {
         <Col>
           <ListGroup>
             {fav.length === 0 ? (
-              <p className="ms-2 fst-italic">You don't have any jobs saved</p>
+              <p className="ms-2 fst-italic">
+                You don't have any jobs added to favorite
+              </p>
             ) : (
               fav.map((job, i) => (
                 <ListGroupItem key={i}>
