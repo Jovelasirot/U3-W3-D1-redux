@@ -21,8 +21,16 @@ const Favorite = () => {
   };
 
   const handleReset = () => {
-    alert("This will reset your favorites job list");
-    dispatch(resetFavList());
+    const resetConfirm = window.confirm(
+      "Are you sure you want to reset your favorites job list?"
+    );
+
+    if (resetConfirm) {
+      dispatch(resetFavList());
+      alert("List has been reseted");
+    } else {
+      alert("The reset was canceled");
+    }
   };
   return (
     <Container className="vh-100 d-flex flex-column justify-content-center ">
