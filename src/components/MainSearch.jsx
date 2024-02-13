@@ -90,7 +90,6 @@ const MainSearch = () => {
             </>
           ) : jobs.length === 0 ? (
             <p className="mt-2 ms-2 fst-italic">
-              {" "}
               To start search a company or a job
             </p>
           ) : (

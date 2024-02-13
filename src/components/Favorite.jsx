@@ -26,8 +26,16 @@ const Favorite = () => {
     );
 
     if (resetConfirm) {
-      dispatch(resetFavList());
-      alert("List has been reseted");
+      const sureResetConfirm = window.confirm("Are you sure?");
+      if (sureResetConfirm) {
+        const sureSureResetConfirm = window.confirm(
+          `Are you sure SURE (; ☉_☉)?`
+        );
+        if (sureSureResetConfirm) {
+          dispatch(resetFavList());
+          alert("List has been reseted");
+        }
+      }
     } else {
       alert("The reset was canceled");
     }
@@ -72,8 +80,11 @@ const Favorite = () => {
                         {job.company_name}
                       </Link>
                     </Col>
-                    <Col>
-                      <span>{job.job_type}</span>
+                    <Col className="d-flex align-items-center">
+                      <span>Type of job:</span>
+                      <span className="ms-2 bg-info p-1 rounded-1 text-light">
+                        {job.job_type}
+                      </span>
                     </Col>
                     <Col className="text-end">
                       <Button variant="warning" onClick={() => handleRemove(i)}>
