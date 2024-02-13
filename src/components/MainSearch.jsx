@@ -5,7 +5,6 @@ import {
   Col,
   Form,
   Button,
-  Spinner,
   Placeholder,
 } from "react-bootstrap";
 import Job from "./Job";
